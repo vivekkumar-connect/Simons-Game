@@ -1,0 +1,59 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body{
+    background-color: #090040;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+section{
+    margin-top: 100px;
+}
+.heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive ;
+    color: #FFCC00;
+    font-size: 2rem;
+    text-align: center;
+}
+/* justify content work for each section to get into center if grid is full width (1fr 1fr would have taken full width with half half column) */
+/* justify items work for items inside each seaction to where to align its conent */
+.container{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 250px 250px;
+    justify-content: center;
+    justify-items: center;
+}
+.button{
+    margin: 25px;
+    display: inline-block;
+    height: 200px;
+    width: 200px;
+    border: 10px solid black;
+    border-radius: 20%;
+    transition: transform 0.3s ease
+}
+#green{
+    background-color: green;
+}
+#red{
+    background-color: red;
+}
+#blue{
+    background-color: blue;
+}
+#yellow{
+    background-color: yellow;
+}
+.active {
+    background-color: white !important;
+    box-shadow: 0 0 10px 10px var(--glow-color);
+    transform: scale(1.1);
+
+}
