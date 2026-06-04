@@ -8,6 +8,8 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    height: 100vh;
 }
 section{
     margin-top: 100px;
@@ -18,7 +20,7 @@ section{
     align-items: center;
     font-family: 'Press Start 2P', cursive ;
     color: #FFCC00;
-    font-size: 2rem;
+    font-size: 1rem;
     text-align: center;
 }
 /* justify content work for each section to get into center if grid is full width (1fr 1fr would have taken full width with half half column) */
@@ -26,15 +28,15 @@ section{
 .container{
     width: 100%;
     display: grid;
-    grid-template-columns: 250px 250px;
+    grid-template-columns: 150px 150px;
     justify-content: center;
     justify-items: center;
 }
 .button{
     margin: 25px;
     display: inline-block;
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
     border: 10px solid black;
     border-radius: 20%;
     transition: transform 0.3s ease
@@ -55,5 +57,22 @@ section{
     background-color: white !important;
     box-shadow: 0 0 10px 10px var(--glow-color);
     transform: scale(1.1);
-
+}
+.play-button{
+    user-select: none;
+    background-color: #FFCC00;
+    padding: 1rem;
+    border-radius: 100px;
+    border: 3px solid;
+    width: 40%;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+}
+.wrong{
+    background-color: red;
+}
+@media (max-width:768px) {
+    .heading{
+        font-size: .5rem;
+    }
 }
