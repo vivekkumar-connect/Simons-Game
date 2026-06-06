@@ -59,7 +59,7 @@ function addButtonCLicks() {
 
 function resetGame() {
   roundCount = 0;
-  $(".heading").html("<h1>Game over</h1>");
+  $(".heading").html("<h1>Game over <br/> Press 'Play' to start again!</h1>");
   playSequence = [];
   soundSequence = [];
   flashWindowWrong();
