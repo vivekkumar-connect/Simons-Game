@@ -1,62 +1,99 @@
-addButtonCLicks();
 
 const colorArray = ["green", "red", "yellow", "blue"];
 let roundCount = 0;
 let gameState = false;
+let waitForNextColor = false;
 let soundSequence = [];
 let playSequence = [];
+addButtonCLicks();
 
-function startGame() {
+function startRound() {
+  console.log("Starting another round");
   playSequence = [];
   roundCount += 1;
+  changeRoundCount(roundCount);
   let randomNumber = randomNumberfromZero(colorArray.length);
   let randomColor = colorArray[randomNumber];
+  if(gameState){
+    console.log("Flashing new color")
+    gameState = false
+    setTimeout(()=>{
+      playSound(randomColor);
+      flashButton($("#" + randomColor), randomColor);
+    },500)
+    gameState = true
+  }
   soundSequence.push(randomNumber);
-  playSound(randomColor);
-  changeRoundCount(roundCount);
-  flashButton($("#" + randomColor), randomColor);
 }
 
-function matchSequrence(soundSequence, playSequence) {
-  debugger;
-  console.log("Runining [" + soundSequence + "]|[" + playSequence + "]");
-  if (checkSameElementArray(soundSequence, playSequence)) {
-    if (soundSequence.length == playSequence.length) {
-      setTimeout(() => {
-        startGame();
-      }, 2000);
+function matchSequence(soundSequence, playSequence) {
+  console.log("Runining [" + soundSequence + "]---[" + playSequence + "]");
+  //if last clcicked element == last color sequen
+  if (soundSequence[playSequence.length-1] == playSequence[playSequence.length-1]){
+    console.log("Same")
+    if (soundSequence.length == playSequence.length){
+      console.log("Starting sequence");
+      startRound();
     }
-  } else {
-    flashWindowWrong();
-    gameState = false;
+  }else{
+    console.log("Sequence didnt match!")
     resetGame();
+  }
+  //then we wait for time and then run another round 
+}
+
+function addButtonCLicks() {
+  const gameButtonList = $(".color-button-container .button");
+  for (let i = 0; i < gameButtonList.length; i++){
+    $(gameButtonList[i]).click(function () {
+      let color = $(this).attr("id");
+      if (gameState) {
+        playSound(color);
+        playSequence.push(i);
+        matchSequence(soundSequence, playSequence);
+        flashButton(this, color);
+      }
+    });
   }
 }
 
 function resetGame() {
   roundCount = 0;
-  $(".heading").html("<h1> Press 'Play' to start!</h1>");
+  $(".heading").html("<h1>Game over</h1>");
   playSequence = [];
   soundSequence = [];
+  flashWindowWrong();
+  gameState = false;
+  $(".play-button").removeClass("hide");
 }
+
 
 $(window).on("keydown", function (event) {
   if (!gameState){
     if (event.key == "Enter") {
       gameState = true;
-      startGame();
+      soundSequence = [];
+      startRound();
     }
   }
 });
+
 $(".play-button").on("click",  function (event) {
   if (!gameState){
     gameState = true;
-    startGame();
+    soundSequence = [];
+    startRound();
   }
+  $(this).addClass("hide");
 });
 
-function changeRoundCount(roundCount) {
-  $(".heading").html("<h1> Round " + roundCount + "</h1>");
+function checkSameElementArray(biggerArray, smallerArray) {
+  for (let i = 0; i < smallerArray.length; i++) {
+    if (biggerArray[i] !== smallerArray[i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 function flashButton(element, shadowColor) {
@@ -84,47 +121,6 @@ function randomNumberfromZero(length) {
   return Math.floor(Math.random() * length);
 }
 
-function addButtonCLicks() {
-  $("#green").click(function () {
-    if (gameState) {
-      playSound("green");
-      playSequence.push(0);
-      matchSequrence(soundSequence, playSequence);
-      flashButton(this, "green");
-    }
-  });
-  $("#red").click(function () {
-    if (gameState) {
-      playSound("red");
-      playSequence.push(1);
-      matchSequrence(soundSequence, playSequence);
-      flashButton(this, "red");
-    }
-  });
-  $("#yellow").click(function () {
-    if (gameState) {
-      playSound("yellow");
-      playSequence.push(2);
-      matchSequrence(soundSequence, playSequence);
-      flashButton(this, "yellow");
-    }
-  });
-  $("#blue").click(function () {
-    if (gameState) {
-      playSound("blue");
-      playSequence.push(3);
-      matchSequrence(soundSequence, playSequence);
-      flashButton(this, "blue");
-    }
-  });
-}
-
-function checkSameElementArray(biggerArray, smallerArray) {
-  debugger;
-  for (let i = 0; i < smallerArray.length; i++) {
-    if (biggerArray[i] !== smallerArray[i]) {
-      return false;
-    }
-  }
-  return true;
+function changeRoundCount(roundCount) {
+  $(".heading").html("<h1> Round " + roundCount + "</h1>");
 }

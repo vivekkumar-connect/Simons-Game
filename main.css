@@ -8,7 +8,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     height: 100vh;
 }
 section{
@@ -22,10 +22,11 @@ section{
     color: #FFCC00;
     font-size: 1rem;
     text-align: center;
+    height: 2rem;
 }
 /* justify content work for each section to get into center if grid is full width (1fr 1fr would have taken full width with half half column) */
 /* justify items work for items inside each seaction to where to align its conent */
-.container{
+.color-button-container{
     width: 100%;
     display: grid;
     grid-template-columns: 150px 150px;
@@ -68,8 +69,14 @@ section{
     text-align: center;
     font-family: 'Press Start 2P', cursive;
 }
+.hide{
+    display: none;
+}
 .wrong{
     background-color: red;
+}
+.red-text{
+    color: red;
 }
 @media (max-width:768px) {
     .heading{
