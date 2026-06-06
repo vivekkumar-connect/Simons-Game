@@ -2,10 +2,17 @@
 const colorArray = ["green", "red", "yellow", "blue"];
 let roundCount = 0;
 let gameState = false;
-let waitForNextColor = false;
+let acceptInput = false;
 let soundSequence = [];
 let playSequence = [];
 addButtonCLicks();
+
+var greenAudio = new Audio("./Assests/sounds/green.mp3");
+var redAudio = new Audio("./Assests/sounds/red.mp3");
+var yellowAudio = new Audio("./Assests/sounds/yellow.mp3");
+var blueAudio = new Audio("./Assests/sounds/blue.mp3");
+var winAudio = new Audio("./Assests/sounds/win.mp3");
+var wrongAudio = new Audio("./Assests/sounds/wrong.mp3");
 
 function startRound() {
   console.log("Starting another round");
@@ -15,13 +22,17 @@ function startRound() {
   let randomNumber = randomNumberfromZero(colorArray.length);
   let randomColor = colorArray[randomNumber];
   if(gameState){
-    console.log("Flashing new color")
-    gameState = false
+    console.log("Flashing new color");
+    $(".game-heading").text("Watch")
     setTimeout(()=>{
       playSound(randomColor);
       flashButton($("#" + randomColor), randomColor);
-    },500)
-    gameState = true
+      changeRoundCount(roundCount);
+    },1000)
+    setTimeout(() => {
+      $(".game-heading").text("Play")
+      acceptInput = true;
+    }, 1500);
   }
   soundSequence.push(randomNumber);
 }
@@ -33,7 +44,12 @@ function matchSequence(soundSequence, playSequence) {
     console.log("Same")
     if (soundSequence.length == playSequence.length){
       console.log("Starting sequence");
-      startRound();
+      $(".round-count").text("Correct!");
+      playSound("win")
+      acceptInput = false;
+      setTimeout(() => {
+        startRound();
+      }, 1000);
     }
   }else{
     console.log("Sequence didnt match!")
@@ -46,8 +62,8 @@ function addButtonCLicks() {
   const gameButtonList = $(".color-button-container .button");
   for (let i = 0; i < gameButtonList.length; i++){
     $(gameButtonList[i]).click(function () {
-      let color = $(this).attr("id");
-      if (gameState) {
+      let color = this.id;
+      if (acceptInput) {
         playSound(color);
         playSequence.push(i);
         matchSequence(soundSequence, playSequence);
@@ -59,11 +75,12 @@ function addButtonCLicks() {
 
 function resetGame() {
   roundCount = 0;
-  $(".heading").html("<h1>Game over <br/> Press 'Play' to start again!</h1>");
+  $(".game-heading").text("Game Over!")
   playSequence = [];
   soundSequence = [];
   flashWindowWrong();
   gameState = false;
+  acceptInput = false;
   $(".play-button").removeClass("hide");
 }
 
@@ -79,6 +96,7 @@ $(window).on("keydown", function (event) {
 });
 
 $(".play-button").on("click",  function (event) {
+  debugger;
   if (!gameState){
     gameState = true;
     soundSequence = [];
@@ -86,15 +104,6 @@ $(".play-button").on("click",  function (event) {
   }
   $(this).addClass("hide");
 });
-
-function checkSameElementArray(biggerArray, smallerArray) {
-  for (let i = 0; i < smallerArray.length; i++) {
-    if (biggerArray[i] !== smallerArray[i]) {
-      return false;
-    }
-  }
-  return true;
-}
 
 function flashButton(element, shadowColor) {
   $(element).css("--glow-color", shadowColor).addClass("active");
@@ -105,16 +114,40 @@ function flashButton(element, shadowColor) {
 
 function flashWindowWrong() {
   $("body").addClass("wrong");
-  var wrongButtonAudio = new Audio("./Assests/sounds/wrong.mp3");
-  wrongButtonAudio.play();
+  playSound("wrong")
   setTimeout(() => {
     $("body").removeClass("wrong");
   }, 300); // 300ms baad normal
 }
 
-function playSound(color) {
-  let audio = new Audio("./Assests/sounds/" + color + ".mp3");
-  audio.play();
+function playSound(audio) {
+  switch (audio){
+    case "green":
+      //Current time help play sound rapidly on spaming without an issue
+      greenAudio.currentTime = 0;
+      greenAudio.play();
+      break;
+    case "red":
+      redAudio.currentTime = 0;
+      redAudio.play();
+      break;
+    case "yellow":
+      yellowAudio.currentTime = 0;
+      yellowAudio.play();
+      break;
+    case "blue":
+      blueAudio.currentTime = 0;
+      blueAudio.play();
+      break;
+    case "win":
+      winAudio.currentTime = 0;
+      winAudio.play();
+      break;
+    case "wrong":
+      winAudio.currentTime = 0;
+      wrongAudio.play();
+      break;
+  }
 }
 
 function randomNumberfromZero(length) {
@@ -122,5 +155,5 @@ function randomNumberfromZero(length) {
 }
 
 function changeRoundCount(roundCount) {
-  $(".heading").html("<h1> Round " + roundCount + "</h1>");
+  $(".round-count").text("Round "+roundCount);
 }
