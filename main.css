@@ -80,6 +80,9 @@ h1{
 .wrong{
     background-color: red;
 }
+.right{
+    background-color: greenyellow;
+}
 .red-text{
     color: red;
 }

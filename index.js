@@ -45,7 +45,7 @@ function matchSequence(soundSequence, playSequence) {
     if (soundSequence.length == playSequence.length){
       console.log("Starting sequence");
       $(".round-count").text("Correct!");
-      playSound("win")
+      flashWindowWin();
       acceptInput = false;
       setTimeout(() => {
         startRound();
@@ -119,7 +119,13 @@ function flashWindowWrong() {
     $("body").removeClass("wrong");
   }, 300); // 300ms baad normal
 }
-
+function flashWindowWin() {
+  $("body").addClass("right");
+  playSound("win")
+  setTimeout(() => {
+    $("body").removeClass("right");
+  }, 300); // 300ms baad normal
+}
 function playSound(audio) {
   switch (audio){
     case "green":
