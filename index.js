@@ -101,7 +101,7 @@ function resetGame() {
   flashWindowWrong();
   gameState = false;
   acceptInput = false;
-  gameDifficulty = "";
+  gameDifficulty =  $("input[name='mode-selector']").val();
   $(".play-button").removeClass("hide");
   $(".mode-selection").removeClass("hide");
 }
