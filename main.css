@@ -8,8 +8,36 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: space-around; */
     height: 100vh;
+    font-family: 'Press Start 2P', cursive;
+}
+.help-icon{
+    font-family: 'Press Start 2P', cursive;
+    background-color: #090040;
+    text-align: center;
+    color: #FFCC00;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid;
+    align-content: center;
+    border-radius: 50%;
+    z-index: 2;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+#help-details{
+    background-color: #090040;
+    color: #FFCC00;
+    border: 1px solid;
+    padding: 1rem;
+    width: 60%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    line-height: 1.5rem;
 }
 section{
     margin-top: 100px;
@@ -19,7 +47,6 @@ section{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: 'Press Start 2P', cursive ;
     color: #FFCC00;
     font-size: 1rem;
     text-align: center;
@@ -72,7 +99,6 @@ h1{
     border: 3px solid;
     width: 40%;
     text-align: center;
-    font-family: 'Press Start 2P', cursive;
 }
 .hide{
     display: none;
@@ -89,5 +115,8 @@ h1{
 @media (max-width:768px) {
     .heading{
         font-size: .5rem;
+    }
+    #help-details{
+        width: 96%;
     }
 }

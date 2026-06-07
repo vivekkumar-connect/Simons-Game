@@ -38,10 +38,7 @@ function startRound() {
 }
 
 function matchSequence(soundSequence, playSequence) {
-  console.log("Runining [" + soundSequence + "]---[" + playSequence + "]");
-  //if last clcicked element == last color sequen
   if (soundSequence[playSequence.length-1] == playSequence[playSequence.length-1]){
-    console.log("Same")
     if (soundSequence.length == playSequence.length){
       console.log("Starting sequence");
       $(".round-count").text("Correct!");
@@ -55,7 +52,6 @@ function matchSequence(soundSequence, playSequence) {
     console.log("Sequence didnt match!")
     resetGame();
   }
-  //then we wait for time and then run another round 
 }
 
 function addButtonCLicks() {
@@ -96,7 +92,6 @@ $(window).on("keydown", function (event) {
 });
 
 $(".play-button").on("click",  function (event) {
-  debugger;
   if (!gameState){
     gameState = true;
     soundSequence = [];
