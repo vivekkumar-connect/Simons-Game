@@ -15,6 +15,7 @@ var blueAudio = new Audio("./Assests/sounds/blue.mp3");
 var winAudio = new Audio("./Assests/sounds/win.mp3");
 var wrongAudio = new Audio("./Assests/sounds/wrong.mp3");
 var clickAudio = new Audio("./Assests/sounds/click.mp3");
+var selectAudio = new Audio("./Assests/sounds/select.mp3");
 
 function startRound() {
   playSequence = [];
@@ -118,10 +119,14 @@ function resetGame() {
 //   }
 // });
 
+$(".help-icon").on("click",function(){
+  playSound("select");
+})
+
 $("input[name='mode-selector']").change(function () {
     gameDifficulty = $(this).val();
     console.log(gameDifficulty);
-    playSound("click");
+    playSound("select");
 });
 
 $(".play-button").on("click",  function (event) {
@@ -186,6 +191,10 @@ function playSound(audio) {
     case "click":
       clickAudio.currentTime = 0;
       clickAudio.play();
+      break;
+    case "select":
+      selectAudio.currentTime = 0;
+      selectAudio.play();
       break;
   }
 }

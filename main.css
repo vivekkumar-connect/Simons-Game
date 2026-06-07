@@ -67,8 +67,11 @@ h1{
 }
 .mode-selection{
     color: #FFCC00;
-    padding: 1.5rem 0;
+    padding:  1rem;
     accent-color: #FFCC00;
+    user-select: none;
+    border-radius: 100px;
+    margin-bottom: .5rem;
 }
 .color-button{
     margin: 25px;
