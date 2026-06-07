@@ -14,6 +14,7 @@ var yellowAudio = new Audio("./Assests/sounds/yellow.mp3");
 var blueAudio = new Audio("./Assests/sounds/blue.mp3");
 var winAudio = new Audio("./Assests/sounds/win.mp3");
 var wrongAudio = new Audio("./Assests/sounds/wrong.mp3");
+var clickAudio = new Audio("./Assests/sounds/click.mp3");
 
 function startRound() {
   playSequence = [];
@@ -120,6 +121,7 @@ function resetGame() {
 $("input[name='mode-selector']").change(function () {
     gameDifficulty = $(this).val();
     console.log(gameDifficulty);
+    playSound("click");
 });
 
 $(".play-button").on("click",  function (event) {
@@ -130,6 +132,7 @@ $(".play-button").on("click",  function (event) {
   }
   $(this).addClass("hide");
   $(".mode-selection").addClass("hide");
+  playSound("click")
 });
 
 function flashButton(element, shadowColor) {
@@ -179,6 +182,10 @@ function playSound(audio) {
     case "wrong":
       winAudio.currentTime = 0;
       wrongAudio.play();
+      break;
+    case "click":
+      clickAudio.currentTime = 0;
+      clickAudio.play();
       break;
   }
 }
