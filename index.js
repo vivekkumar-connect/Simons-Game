@@ -5,6 +5,7 @@ let gameState = false;
 let acceptInput = false;
 let soundSequence = [];
 let playSequence = [];
+let gameDifficulty = $("input[name='mode-selector']").val();
 addButtonCLicks();
 
 var greenAudio = new Audio("./Assests/sounds/green.mp3");
@@ -15,26 +16,49 @@ var winAudio = new Audio("./Assests/sounds/win.mp3");
 var wrongAudio = new Audio("./Assests/sounds/wrong.mp3");
 
 function startRound() {
-  console.log("Starting another round");
   playSequence = [];
   roundCount += 1;
   changeRoundCount(roundCount);
   let randomNumber = randomNumberfromZero(colorArray.length);
-  let randomColor = colorArray[randomNumber];
+  soundSequence.push(randomNumber);
   if(gameState){
     console.log("Flashing new color");
     $(".game-heading").text("Watch")
-    setTimeout(()=>{
-      playSound(randomColor);
-      flashButton($("#" + randomColor), randomColor);
-      changeRoundCount(roundCount);
-    },1000)
-    setTimeout(() => {
-      $(".game-heading").text("Play")
-      acceptInput = true;
-    }, 1500);
+    switch (gameDifficulty){
+      //Easy mode
+      case "easy":
+        for (let i = 0; i < soundSequence.length; i++){
+          console.log("Runing "+ soundSequence.length + " - "+ soundSequence)
+          let soundSequenceIndex = soundSequence[i];
+          let tempColor = colorArray[soundSequenceIndex];
+          setTimeout(()=>{
+            playSound(tempColor);
+            flashButton($("#" + tempColor), tempColor);
+          },1000 * (i+1))
+        }
+        setTimeout(() => {
+          changeRoundCount(roundCount);
+          $(".game-heading").text("Play")
+          console.log("Running 1")
+          acceptInput = true;
+        }, 1000 * (soundSequence.length) + 500);
+        break;
+      //Hard Mode
+      case "hard":
+        setTimeout(()=>{
+            let randomColor = colorArray[randomNumber];
+            playSound(randomColor);
+            flashButton($("#" + randomColor), randomColor);
+            changeRoundCount(roundCount);
+          },1000);
+          setTimeout(() => {
+            $(".game-heading").text("Play")
+            console.log("Rinnung 2")
+            acceptInput = true;
+          }, 1500);
+          break;
+      }
   }
-  soundSequence.push(randomNumber);
 }
 
 function matchSequence(soundSequence, playSequence) {
@@ -55,7 +79,7 @@ function matchSequence(soundSequence, playSequence) {
 }
 
 function addButtonCLicks() {
-  const gameButtonList = $(".color-button-container .button");
+  const gameButtonList = $(".color-button-container .color-button");
   for (let i = 0; i < gameButtonList.length; i++){
     $(gameButtonList[i]).click(function () {
       let color = this.id;
@@ -77,18 +101,25 @@ function resetGame() {
   flashWindowWrong();
   gameState = false;
   acceptInput = false;
+  gameDifficulty = "";
   $(".play-button").removeClass("hide");
+  $(".mode-selection").removeClass("hide");
 }
 
 
-$(window).on("keydown", function (event) {
-  if (!gameState){
-    if (event.key == "Enter") {
-      gameState = true;
-      soundSequence = [];
-      startRound();
-    }
-  }
+// $(window).on("keydown", function (event) {
+//   if (!gameState){
+//     if (event.key == "Enter") {
+//       gameState = true;
+//       soundSequence = [];
+//       startRound();
+//     }
+//   }
+// });
+
+$("input[name='mode-selector']").change(function () {
+    gameDifficulty = $(this).val();
+    console.log(gameDifficulty);
 });
 
 $(".play-button").on("click",  function (event) {
@@ -98,6 +129,7 @@ $(".play-button").on("click",  function (event) {
     startRound();
   }
   $(this).addClass("hide");
+  $(".mode-selection").addClass("hide");
 });
 
 function flashButton(element, shadowColor) {

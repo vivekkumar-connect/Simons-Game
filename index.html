@@ -17,7 +17,9 @@
             2. Repeat them in the same order.<br>
             3. Every round adds a new color.</br>
             4. One mistake = Game Over.<br>
-            5. How many rounds can you survive?
+            5. How many rounds can you survive? <br>
+            Easy mode - shows full sequence. <br>
+            Hard mode - only show new color.
         </p>
     </div>
     <div class="heading">
@@ -26,12 +28,22 @@
     </div>
     <section></section>
     <div class="color-button-container">
-        <div class="button" id="green"></div>
-        <div class="button" id="red"></div>
-        <div class="button" id="yellow"></div>
-        <div class="button" id="blue"></div>
+        <div class="color-button" id="green"></div>
+        <div class="color-button" id="red"></div>
+        <div class="color-button" id="yellow"></div>
+        <div class="color-button" id="blue"></div>
     </div>
     <section></section>
+    <div class="mode-selection">
+        <label>
+            <input type="radio" name="mode-selector" value="easy" checked>
+            Easy    
+        </label>
+        <label>
+        <input type="radio" name="mode-selector" value="hard">
+            Hard
+        </label>
+    </div>
     <div class="play-button">Play</div>
     <section></section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
