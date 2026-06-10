@@ -26,6 +26,7 @@ body{
     position: fixed;
     top: 20px;
     left: 20px;
+    user-select: none;
 }
 #help-details{
     background-color: #090040;
@@ -64,6 +65,8 @@ h1{
     grid-template-columns: 150px 150px;
     justify-content: center;
     justify-items: center;
+    transform: scale(1);
+    transition: transform .5s ease;
 }
 .mode-selection{
     color: #FFCC00;

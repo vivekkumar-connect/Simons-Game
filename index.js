@@ -26,6 +26,7 @@ function startRound() {
   if(gameState){
     console.log("Flashing new color");
     $(".game-heading").text("Watch")
+    $('.color-button-container').css('transform','scale(0.9)');
     switch (gameDifficulty){
       //Easy mode
       case "easy":
@@ -43,6 +44,7 @@ function startRound() {
           $(".game-heading").text("Play")
           console.log("Running 1")
           acceptInput = true;
+          $('.color-button-container').css('transform','scale(1)');
         }, 1000 * (soundSequence.length) + 500);
         break;
       //Hard Mode
@@ -57,6 +59,7 @@ function startRound() {
             $(".game-heading").text("Play")
             console.log("Rinnung 2")
             acceptInput = true;
+            $('.color-button-container').css('transform','scale(1)');
           }, 1500);
           break;
       }
@@ -76,6 +79,7 @@ function matchSequence(soundSequence, playSequence) {
     }
   }else{
     console.log("Sequence didnt match!")
+    
     resetGame();
   }
 }
@@ -108,16 +112,6 @@ function resetGame() {
   $(".mode-selection").removeClass("hide");
 }
 
-
-// $(window).on("keydown", function (event) {
-//   if (!gameState){
-//     if (event.key == "Enter") {
-//       gameState = true;
-//       soundSequence = [];
-//       startRound();
-//     }
-//   }
-// });
 
 $(".help-icon").on("click",function(){
   playSound("select");
